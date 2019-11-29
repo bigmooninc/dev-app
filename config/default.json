@@ -1,0 +1,6 @@
+{
+    "mongoURI": "mongodb+srv://bigmooninc:bigmooninc@devapp-6d2yg.gcp.mongodb.net/test?retryWrites=true&w=majority",
+    "jwtSecret": "mysecrettoken",
+    "githubClientId": "5d95d3792384eea1cbc1",
+    "githubSecret": "317858597738ccab0776f8d625109c7be729824e"
+}
