@@ -8,6 +8,9 @@ import MenuItem from '@material-ui/core/MenuItem';
 import InputLabel from '@material-ui/core/InputLabel';
 import { makeStyles } from '@material-ui/core/styles';
 import { display } from '@material-ui/system';
+import { createProfile } from '../../actions/profile';
+import { Link, withRouter } from 'react-router-dom';
+
 
 const useStyles = makeStyles(theme => ({
     margin: {
@@ -15,7 +18,7 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-const CreateProfile = props => {
+const CreateProfile = ({ createProfile, history }) => {
 
     const classes = useStyles();
 
@@ -53,22 +56,20 @@ const CreateProfile = props => {
 
     const onChange = e => setFormData({ ...formData, [e.target.name]: e.target.value});
 
+    const onSubmit = e => {
+        e.preventDefault();
+        createProfile(formData, history);
+    }
 
     return (
         <Fragment>
-            <form className="flex flex-col">
+            <form className="flex flex-col" onSubmit={e => onSubmit(e)}>
                 <TextField id="standard-basic" label="Company" name="company" value={company} onChange={e => onChange(e)}  className={classes.margin} type="text" />
                 <TextField id="standard-basic" label="Website" name="website" value={website} onChange={e => onChange(e)}  className={classes.margin} type="text" />
                 <TextField id="standard-basic" label="Location" name="location" value={location} onChange={e => onChange(e)}  className={classes.margin} type="text" />
+                <TextField id="standard-basic" label="Skills" name="skills" value={skills} onChange={e => onChange(e)}  className={classes.margin} type="text" />
 
                 <TextField id="standard-basic" label="Status" name="status" value={status} onChange={e => onChange(e)}  className={classes.margin} type="text" />
-
-                {/* <InputLabel id="demo-simple-select-label">Status</InputLabel>
-                <Select labelId="demo-simple-select-label" id="demo-simple-select-label" value={status} onChange={e => onChange(e)}>
-                    <MenuItem value={10}>Ten</MenuItem>
-                    <MenuItem value={20}>Twenty</MenuItem>
-                    <MenuItem value={30}>Thirty</MenuItem>
-                </Select> */}
 
                 <TextField id="standard-basic" label="Github Username" name="githubusername" value={githubusername} onChange={e => onChange(e)}  className={classes.margin} type="text" />
                 <TextField id="standard-textarea" label="Bio" multiline name="bio" value={bio} onChange={e => onChange(e)}  className={classes.margin} type="text" />
@@ -86,14 +87,15 @@ const CreateProfile = props => {
                     </Fragment>}
 
                 
-                <Button variant="contained" color="primary" type="submit">Update Profile</Button>
+                <Button variant="contained" color="primary" type="submit">Submit Profile</Button>
             </form>
         </Fragment>
     )
 }
 
 CreateProfile.propTypes = {
-
+    createProfile: PropTypes.func.isRequired,
 }
 
-export default CreateProfile;
+
+export default connect(null, { createProfile })(withRouter(CreateProfile));
